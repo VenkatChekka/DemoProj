@@ -10,7 +10,7 @@ pipeline {
         stage ('checkout') {
           steps {
             echo ("this is checkout stage")
-            checkout poll: false, scm: scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/VenkatChekka/jenkins_pipeline_springboot_demo.git']])
+            checkout poll: false, scm: scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/VenkatChekka/DemoProj.git']])
            }
          }
         stage ('Build') {
