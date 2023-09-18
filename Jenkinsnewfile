@@ -10,16 +10,22 @@ pipeline {
         stage ('checkout') {
           steps {
             echo ("this is checkout stage")
-            checkout poll: false, scm: scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/VenkatChekka/DemoProj.git']])
+            checkout poll: false, scm: scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'SSH-Agent-Key', url: 'https://github.com/VenkatChekka/DemoProj.git']])
            }
          }
         stage ('Build') {
+         agent {
+            label "slave1"
+          }
           steps {
-            echo ("This is Build Phase")
+            echo ("This is Build Phase, Build Stage is in Progress")
             sh 'mvn compile'
            } 
          }      
         stage ('Install') {
+          agent {
+            label "slave2"
+          }
           steps {
            echo ("This is to Install the JAR file")
            sh 'mvn install'
@@ -27,6 +33,9 @@ pipeline {
           }
         }
       stage ('Test') {
+        agent {
+            label "slave2"
+          }
         steps {
            echo ("This is test phase")
            sh 'mvn test'
