@@ -8,22 +8,22 @@ pipeline {
     stages {
         stage ('checkout') {
           steps {
-            echo ("this is checkout stage")
-            checkout poll: false, scm: scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'SSH-Agent-Key', url: 'https://github.com/VenkatChekka/DemoProj.git']])
-           }
-         }
+            echo "this is checkout stage"
+            checkout poll: false, scm: scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/VenkatChekka/DemoProj.git']])
+          }
+        }
         stage ('Build') {
          agent {
-            label "slave1"
-          }
+            label "agentnode1"
+           }
           steps {
-            echo ("This is Build Phase, Build Stage is in Progress")
+            echo "This is Build Phase, Build Stage is in Progress"
             sh 'mvn compile'
            } 
-         }      
-      stage ('Test') {
-        agent {
-            label "slave2"
+        }
+        stage ('Test') {
+         agent {
+            label "agentnode2"
           }
         steps {
            echo ("This is test phase")
