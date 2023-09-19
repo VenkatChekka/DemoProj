@@ -16,7 +16,7 @@ pipeline {
         }
         stage ('Build') {
              agent {
-            label "agentnode2"
+            label "agentnode1"
           }
             steps {
                 echo "Build Stage is in progress"
@@ -26,7 +26,7 @@ pipeline {
         }
         stage ('Test'){
              agent {
-            label "agentnode2"
+            label "agentnode1"
           }
             steps {
                 echo "Test Stage is in progress"
